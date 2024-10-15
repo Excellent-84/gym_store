@@ -4,6 +4,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/users.entity';
 import * as bcrypt from 'bcryptjs';
+import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class AuthService {
@@ -27,6 +28,10 @@ export class AuthService {
 
     const hashPassword = await bcrypt.hash(userDto.password, 10);
     return await this.userService.createUser({ ...userDto, password: hashPassword });
+    // const user = await this.userService.createUser({ ...userDto, password: hashPassword });
+    // const userRole = await this.roleService.getRoleByValue('USER');
+    // user.role = userRole;
+    // return user;
   }
 
   private async generateToken(user: User) {

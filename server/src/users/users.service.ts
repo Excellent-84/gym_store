@@ -5,22 +5,28 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcryptjs';
+import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class UsersService {
 
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly roleService: RolesService
   ) {}
 
   async createUser(dto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(dto);
+    const userRole = await this.roleService.getRoleByValue('USER');
+    user.role = userRole;
     await this.userRepository.save(user);
     return user;
   }
 
   async getUsers(): Promise<User[]> {
-    const users = await this.userRepository.find();
+    const users = await this.userRepository.find({
+      relations: { role: true }
+    });
     return users;
   }
 

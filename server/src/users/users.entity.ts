@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { Role } from 'src/roles/roles.entity';
 
 @Entity('users')
 export class User {
@@ -17,4 +18,7 @@ export class User {
   @Exclude()
   @Column('varchar', { length: 255 })
   password!: string;
+
+  @ManyToOne(() => Role, (role) => role.users)
+  role: Role;
 }
