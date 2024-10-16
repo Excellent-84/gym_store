@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDecimal, IsNumber, IsPositive, IsString, MaxLength } from 'class-validator';
 
-export class CreateHoopDto {
+export class CreateBallDto {
 
-  @ApiProperty({ example: 'Hoop', description: 'Наименование товара'})
+  @ApiProperty({ example: 'Ball', description: 'Наименование товара'})
   @IsString({ message: 'Должно быть строкой' })
   @MaxLength(20, { message: 'Не больше 20 символов' })
   readonly title!: string;

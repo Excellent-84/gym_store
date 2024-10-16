@@ -36,7 +36,7 @@ export class HoopsController {
     return this.hoopService.getHoopById(id);
   }
 
-  @ApiOperation({ summary: 'Обновить пользователя' })
+  @ApiOperation({ summary: 'Обновить обруч' })
   @ApiResponse({ status: 200, type: Hoop })
   // @Roles('ADMIN')
   // @UseGuards(RoleGuard)
@@ -45,7 +45,7 @@ export class HoopsController {
     return this.hoopService.updateHoop(id, dto);
   }
 
-  @ApiOperation({ summary: 'Удалить пользователя' })
+  @ApiOperation({ summary: 'Удалить обруч' })
   @HttpCode(204)
   // @Roles('ADMIN')
   // @UseGuards(RoleGuard)

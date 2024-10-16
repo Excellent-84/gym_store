@@ -7,12 +7,13 @@ import { AuthModule } from '../auth/auth.module';
 import { Role } from 'src/roles/roles.entity';
 import { RolesModule } from 'src/roles/roles.module';
 import { Hoop } from 'src/hoops/hoops.entity';
+import { Ball } from 'src/balls/balls.entity';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
   imports: [
-    TypeOrmModule.forFeature([User, Role, Hoop]),
+    TypeOrmModule.forFeature([User, Role, Hoop, Ball]),
     forwardRef(() => AuthModule),
     RolesModule
   ],
