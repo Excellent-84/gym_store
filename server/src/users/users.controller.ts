@@ -1,13 +1,16 @@
-import { Controller, Get, Put, Delete, Param, Body, UseGuards, HttpCode, UsePipes, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Param, Body, UseGuards, HttpCode, UsePipes, ParseIntPipe, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from './users.entity';
+import { RoleGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/roles/roles.decorator';
+import { AddRoleDto } from './dto/add-role.dto';
 
 @ApiTags('Пользователи')
 @UseGuards(JwtAuthGuard)
-@UsePipes(ParseIntPipe)
+// @UsePipes(ParseIntPipe)
 @Controller('users')
 export class UsersController {
 
@@ -15,6 +18,8 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Получить всех пользователей' })
   @ApiResponse({ status: 200, type: [User] })
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
   @Get()
   async findAll(): Promise<User[]> {
     return this.usersService.getUsers();
@@ -39,5 +44,14 @@ export class UsersController {
   @Delete(':id')
   async delete(@Param('id') id: number): Promise<void> {
     return this.usersService.deleteUser(id);
+  }
+
+  @ApiOperation({ summary: 'Выдать роль' })
+  @ApiResponse({ status: 200})
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
+  @Post('/role')
+  async addRole(@Body() dto: AddRoleDto) {
+    return this.usersService.addRole(dto);
   }
 }

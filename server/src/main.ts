@@ -8,7 +8,7 @@ async function start() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('ToDo: список дел')
+    .setTitle('Интернет-магазин предметов для художественной гимнастики')
     .setDescription('Документация REST API')
     .build();
 

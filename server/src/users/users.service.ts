@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { RolesService } from 'src/roles/roles.service';
+import { AddRoleDto } from './dto/add-role.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +18,7 @@ export class UsersService {
 
   async createUser(dto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(dto);
-    const userRole = await this.roleService.getRoleByValue('USER');
+    const userRole = await this.roleService.getRoleByValue('ADMIN');
     user.role = userRole;
     await this.userRepository.save(user);
     return user;
@@ -31,7 +32,10 @@ export class UsersService {
   }
 
   async getUserById(id: number): Promise<User> {
-    const user = await this.userRepository.findOneBy({ id });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['role']
+    });
 
     if (!user) {
       throw new NotFoundException('Пользователь не найден')
@@ -53,7 +57,18 @@ export class UsersService {
   }
 
   async getUserByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ email });
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ['role']
+     });
     return user;
+  }
+
+  async addRole(dto: AddRoleDto) {
+    const user = await this.getUserById(dto.userId);
+    const userRole = await this.roleService.getRoleByValue(dto.value);
+    user.role = userRole;
+    await this.userRepository.save(user);
+    return dto;
   }
 }

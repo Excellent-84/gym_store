@@ -12,10 +12,6 @@ export class CreateUserDto {
   @IsString({ message: 'Должно быть строкой' })
   @Length(8, 16, { message: 'Не меньше 8 и не больше 16 символов' })
   readonly password: string;
-
-  // @ApiProperty({ example: 'USER', description: 'Уникальное значение роли' })
-  // @IsString({ message: 'Должно быть строкой' })
-  // role?: string;
 }
 
 export class TokenResponse {
