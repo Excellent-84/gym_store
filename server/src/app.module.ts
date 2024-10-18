@@ -5,13 +5,17 @@ import { User } from "./users/users.entity";
 import { UsersModule } from "./users/users.module";
 import { RolesModule } from './roles/roles.module';
 import { Role } from "./roles/roles.entity";
-import { HoopsModule } from './hoops/hoops.module';
+import { ItemsModule } from './items/items.module';
 import { FilesModule } from './files/files.module';
-import { Hoop } from "./hoops/hoops.entity";
+import { Item } from "./items/items.entity";
 import { ServeStaticModule } from "@nestjs/serve-static";
-import { BallsModule } from './balls/balls.module';
+import { InfoModule } from './info/info.module';
 import * as path from "path";
-import { Ball } from "./balls/balls.entity";
+import { Info } from "./info/info.entity";
+import { TypesModule } from './types/types.module';
+import { BrandsModule } from './brands/brands.module';
+import { Brand } from "./brands/brands.entity";
+import { Type } from "./types/types.entity";
 
 @Module({
   controllers: [],
@@ -30,14 +34,16 @@ import { Ball } from "./balls/balls.entity";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [User, Role, Hoop, Ball],
+      entities: [User, Role, Item, Info, Brand, Type],
       synchronize: true
     }),
     UsersModule,
     RolesModule,
-    HoopsModule,
+    ItemsModule,
     FilesModule,
-    BallsModule,
+    InfoModule,
+    TypesModule,
+    BrandsModule,
   ],
 })
 export class AppModule {}
