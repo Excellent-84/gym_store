@@ -18,8 +18,8 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Получить всех пользователей' })
   @ApiResponse({ status: 200, type: [User] })
-  @Roles('ADMIN')
-  @UseGuards(RoleGuard)
+  // @Roles('ADMIN')
+  // @UseGuards(RoleGuard)
   @Get()
   async findAll(): Promise<User[]> {
     return this.usersService.getUsers();

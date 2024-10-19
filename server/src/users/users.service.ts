@@ -26,8 +26,9 @@ export class UsersService {
 
   async getUsers(): Promise<User[]> {
     const users = await this.userRepository.find({
-      relations: { role: true }
+      relations: { role: true, basket:true }
     });
+    console.log(users)
     return users;
   }
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -18,18 +18,18 @@ export class ItemsController {
   // @UseGuards(RoleGuard)
   @UseInterceptors(FileInterceptor('image'))
   @Post('/')
-  async create(
-    @Body() typeId: number, brandId: number, dto: CreateItemDto,
-    @UploadedFile() image
-  ) {
-    return this.itemService.createItem(dto, typeId, brandId, image);
+  async create(@Body() dto: CreateItemDto, infoId: number, @UploadedFile() image) {
+    return this.itemService.createItem(dto, infoId, image);
   }
 
   @ApiOperation({ summary: 'Получить все предметы' })
   @ApiResponse({ status: 200, type: [Item] })
   @Get()
-  async findAll(): Promise<Item[]> {
-    return this.itemService.getItems();
+  async findAll(
+    @Query('typeId') typeId: number,
+    @Query('brandId') brandId: number,
+  ): Promise<Item[]> {
+    return this.itemService.getItems(typeId, brandId);
   }
 
   @ApiOperation({ summary: 'Получить предмет по id' })
@@ -43,9 +43,12 @@ export class ItemsController {
   @ApiResponse({ status: 200, type: Item })
   // @Roles('ADMIN')
   // @UseGuards(RoleGuard)
+  @UseInterceptors(FileInterceptor('image'))
   @Put(':id')
-  async update(@Param('id') id: number, @Body() dto: UpdateItemDto): Promise<Item> {
-    return this.itemService.updateItem(id, dto);
+  async update(
+    @Param('id') id: number, @Body() dto: UpdateItemDto, @UploadedFile() image
+  ): Promise<Item> {
+    return this.itemService.updateItem(id, dto, image);
   }
 
   @ApiOperation({ summary: 'Удалить предмет' })

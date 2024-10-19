@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { BasketItem } from 'src/basket_item/basket_item.entity';
 import { Brand } from 'src/brands/brands.entity';
+import { Info } from 'src/info/info.entity';
 import { Type } from 'src/types/types.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, OneToMany } from 'typeorm';
 
 @Entity('items')
 export class Item {
@@ -22,9 +24,15 @@ export class Item {
   @Column('decimal')
   price!: number;
 
-  @ManyToOne(() => Type, (type) => type.items)
-  type: Type
+  @OneToOne(() => BasketItem, (baskeItem) => baskeItem.item)
+  basketItem: BasketItem;
 
-  @ManyToOne(() => Brand, (brand) => brand.items)
-  brand: Brand
+  @OneToMany(() => Info, (info) => info.item, { cascade: true })
+  info: Info[];
+
+  @ManyToOne(() => Type, (type) => type.items, { onDelete: 'CASCADE'})
+  type: Type;
+
+  @ManyToOne(() => Brand, (brand) => brand.items, { onDelete: 'CASCADE'})
+  brand: Brand;
 }

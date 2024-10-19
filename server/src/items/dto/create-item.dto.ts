@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDecimal, IsPositive, IsString, MaxLength } from 'class-validator';
+import { IsDecimal, IsNumber, IsPositive, IsString, MaxLength } from 'class-validator';
 
 export class CreateItemDto {
 
@@ -12,4 +12,14 @@ export class CreateItemDto {
   @IsDecimal({}, { message: 'Должно быть числом' })
   @IsPositive({ message: 'Должно быть положительным числом' })
   readonly price!: number;
+
+  @ApiProperty({ example: '2', description: 'id типа' })
+  @IsNumber({}, { message: 'Должно быть числом' })
+  @IsPositive({ message: 'Должно быть положительным числом' })
+  readonly typeId!: number;
+
+  @ApiProperty({ example: '1', description: 'id бренда' })
+  @IsNumber({}, { message: 'Должно быть числом' })
+  @IsPositive({ message: 'Должно быть положительным числом' })
+  readonly brandId!: number;
 }

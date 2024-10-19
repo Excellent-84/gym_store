@@ -16,6 +16,10 @@ import { TypesModule } from './types/types.module';
 import { BrandsModule } from './brands/brands.module';
 import { Brand } from "./brands/brands.entity";
 import { Type } from "./types/types.entity";
+import { BasketsModule } from './baskets/baskets.module';
+import { Basket } from "./baskets/baskets.entity";
+import { BasketItemModule } from './basket_item/basket_item.module';
+import { BasketItem } from "./basket_item/basket_item.entity";
 
 @Module({
   controllers: [],
@@ -34,7 +38,7 @@ import { Type } from "./types/types.entity";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [User, Role, Item, Info, Brand, Type],
+      entities: [User, Role, Item, Info, Brand, Type, Basket, BasketItem],
       synchronize: true
     }),
     UsersModule,
@@ -44,6 +48,8 @@ import { Type } from "./types/types.entity";
     InfoModule,
     TypesModule,
     BrandsModule,
+    BasketsModule,
+    BasketItemModule,
   ],
 })
 export class AppModule {}

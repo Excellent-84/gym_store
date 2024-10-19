@@ -8,12 +8,14 @@ import { Role } from 'src/roles/roles.entity';
 import { RolesModule } from 'src/roles/roles.module';
 import { Item } from 'src/items/items.entity';
 import { Info } from 'src/info/info.entity';
+import { Basket } from 'src/baskets/baskets.entity';
+import { BasketsModule } from 'src/baskets/baskets.module';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService],
   imports: [
-    TypeOrmModule.forFeature([User, Role, Item, Info]),
+    TypeOrmModule.forFeature([User, Role, Item, Info, Basket]),
     forwardRef(() => AuthModule),
     RolesModule
   ],

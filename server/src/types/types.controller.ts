@@ -7,7 +7,7 @@ import { CreateTypeDto } from './dto/create-type.dto';
 @Controller('types')
 export class TypesController {
 
-   constructor(private readonly typeService: TypesService) {}
+  constructor(private readonly typeService: TypesService) {}
 
   @ApiOperation({ summary: 'Добавить тип предмета' })
   @ApiResponse({ status: 201, type: Type })

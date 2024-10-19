@@ -9,12 +9,15 @@ import { Brand } from 'src/brands/brands.entity';
 import { Type } from 'src/types/types.entity';
 import { TypesService } from 'src/types/types.service';
 import { BrandsService } from 'src/brands/brands.service';
+import { BasketItem } from 'src/basket_item/basket_item.entity';
+import { Info } from 'src/info/info.entity';
+import { InfoService } from 'src/info/info.service';
 
 @Module({
-  providers: [ItemsService, TypesService, BrandsService],
+  providers: [ItemsService, TypesService, BrandsService, InfoService],
   controllers: [ItemsController],
   imports: [
-    TypeOrmModule.forFeature([User, Item, Brand, Type]),
+    TypeOrmModule.forFeature([User, Item, Brand, Type, BasketItem, Info]),
     FilesModule
   ]
 })
