@@ -14,6 +14,7 @@ import { ItemsModule } from 'src/items/items.module';
   imports: [
     TypeOrmModule.forFeature([Item, Brand, Type]),
     FilesModule
-  ]
+  ],
+  // exports: [BrandsService]
 })
 export class BrandsModule {}

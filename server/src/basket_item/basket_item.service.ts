@@ -3,25 +3,32 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BasketItem } from './basket_item.entity';
 import { CreateBasketItemDto } from './dto/create-basket_item.dto';
 import { Repository } from 'typeorm';
+import { ItemsService } from 'src/items/items.service';
+import { BasketsService } from 'src/baskets/baskets.service';
 
 @Injectable()
 export class BasketItemService {
 
   constructor(
     @InjectRepository(BasketItem) private readonly basketItemRepository: Repository<BasketItem>,
-                              // private readonly userService: UsersService
+                                  private readonly basketService: BasketsService,
+                                  private readonly itemService: ItemsService
   ) {}
 
   async createBasketItem(dto: CreateBasketItemDto): Promise<BasketItem> {
-    // const user = await this.userService.getUserById(dto.userId);
-    const basket = this.basketItemRepository.create({ ...dto});
-    // await this.basketRepository.save(basket);
-    return basket;
+    const item = await this.itemService.getItemById(dto.itemId);
+    const basket = await this.basketService.getBasketById(dto.basketId)
+    const basketItem = this.basketItemRepository.create({ ...dto, item});
+    basketItem.basket = basket
+    await this.basketItemRepository.save(basketItem);
+    return basketItem;
   }
 
-  async getBasketItemAll(): Promise<BasketItem[]> {
+  async getBasketItemAll(basketId: number): Promise<BasketItem[]> {
+    const basket = await this.basketService.getBasketById(basketId)
     const items = await this.basketItemRepository.find({
-      // relations: { user: true },
+      relations: { item: true, basket: true },
+      where: {basket: {id: basketId}}
     });
     return items;
   }
@@ -29,7 +36,7 @@ export class BasketItemService {
   async getBasketItemById(id: number): Promise<BasketItem> {
     const item = await this.basketItemRepository.findOne({
       where: {id},
-      // relations: ['user']
+      relations: ['basket', 'item']
     });
 
     if (!item) {

@@ -3,19 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Basket } from './baskets.entity';
 import { Repository } from 'typeorm';
 import { CreateBasketDto } from './dto/create-basket.dto';
-import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class BasketsService {
 
   constructor(
-    @InjectRepository(Basket) private readonly basketRepository: Repository<Basket>,
-                              private readonly userService: UsersService
+    @InjectRepository(Basket) private readonly basketRepository: Repository<Basket>
   ) {}
 
   async createBasket(dto: CreateBasketDto): Promise<Basket> {
-    const user = await this.userService.getUserById(dto.userId);
-    const basket = this.basketRepository.create({ ...dto, user});
+    const basket = this.basketRepository.create(dto);
     await this.basketRepository.save(basket);
     return basket;
   }

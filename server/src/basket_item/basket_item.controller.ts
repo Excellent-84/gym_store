@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query } from '@nestjs/common';
 import { BasketItemService } from './basket_item.service';
 import { BasketItem } from './basket_item.entity';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -21,8 +21,8 @@ export class BasketItemController {
   @ApiOperation({ summary: 'Получить типы предметов' })
   @ApiResponse({ status: 200, type: [BasketItem] })
   @Get()
-  async findAll(): Promise<BasketItem[]> {
-    return this.basketItemService.getBasketItemAll();
+  async findAll(@Query('basketId') basketId: number): Promise<BasketItem[]> {
+    return this.basketItemService.getBasketItemAll(basketId);
   }
 
   @ApiOperation({ summary: 'Получить тип предмета по id' })

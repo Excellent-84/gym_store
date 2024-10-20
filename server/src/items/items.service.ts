@@ -17,16 +17,16 @@ export class ItemsService {
                             private readonly typeService: TypesService,
                             private readonly brandService: BrandsService,
                             private readonly fileService: FilesService,
-                            private readonly infoService: InfoService
+                            // private readonly infoService: InfoService
   ) {}
 
-  async createItem(dto: CreateItemDto, infoId: number, image: any): Promise<Item> {
+  async createItem(dto: CreateItemDto, image: any): Promise<Item> {
     const fileName = await this.fileService.createFile(image);
     const type = await this.typeService.getTypeById(dto.typeId);
     const brand = await this.brandService.getBrandById(dto.brandId);
-    const info = await this.infoService.getInfoById(infoId);
+    // const info = await this.infoService.getInfoById(infoId);
     const item = this.itemRepository.create({ ...dto, type, brand, image: fileName });
-    info.item = item;
+    // info.item = item;
     await this.itemRepository.save(item);
     return item;
   }
@@ -64,7 +64,7 @@ export class ItemsService {
   async getItemById(id: number): Promise<Item> {
     const item = await this.itemRepository.findOne({
       where: {id},
-      relations: ['type', 'brand']
+      relations: ['type', 'brand', 'info']
     });
 
     if (!item) {

@@ -7,35 +7,38 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { RolesService } from 'src/roles/roles.service';
 import { AddRoleDto } from './dto/add-role.dto';
+import { BasketsService } from 'src/baskets/baskets.service';
 
 @Injectable()
 export class UsersService {
 
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly roleService: RolesService
+    private readonly roleService: RolesService,
+    private readonly basketService: BasketsService
   ) {}
 
   async createUser(dto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(dto);
-    const userRole = await this.roleService.getRoleByValue('ADMIN');
+    const userRole = await this.roleService.getRoleByValue('USER');
     user.role = userRole;
+    const userBasket = await this.basketService.createBasket({userId: user.id});
+    user.basket = userBasket;
     await this.userRepository.save(user);
     return user;
   }
 
   async getUsers(): Promise<User[]> {
     const users = await this.userRepository.find({
-      relations: { role: true, basket:true }
+      relations: { role: true, basket: true }
     });
-    console.log(users)
     return users;
   }
 
   async getUserById(id: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['role']
+      relations: ['role', 'basket']
     });
 
     if (!user) {

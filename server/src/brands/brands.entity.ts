@@ -18,6 +18,6 @@ export class Brand {
   items: Item[];
 
   @ManyToMany(() => Type, (type) => type.brands)
-  @JoinTable()
+  @JoinTable({name: 'brand_type'})
   types: Type[];
 }

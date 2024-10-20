@@ -18,8 +18,8 @@ export class ItemsController {
   // @UseGuards(RoleGuard)
   @UseInterceptors(FileInterceptor('image'))
   @Post('/')
-  async create(@Body() dto: CreateItemDto, infoId: number, @UploadedFile() image) {
-    return this.itemService.createItem(dto, infoId, image);
+  async create(@Body() dto: CreateItemDto, @UploadedFile() image) {
+    return this.itemService.createItem(dto, image);
   }
 
   @ApiOperation({ summary: 'Получить все предметы' })
