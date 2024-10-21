@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { InfoService } from './info.service';
 import { Info } from './info.entity';
 import { CreateInfoDto } from './dto/create-info.dto';
 import { UpdateInfoDto } from './dto/update-info.dto';
+import { Roles } from 'src/auth/roles.decorator';
+import { RoleGuard } from 'src/auth/roles.guard';
 
 @ApiTags('Информация о предмете')
 @Controller('info')
@@ -13,8 +15,8 @@ export class InfoController {
 
   @ApiOperation({ summary: 'Добавить информацию' })
   @ApiResponse({ status: 201, type: Info })
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
   @Post('/')
   async create(@Body() dto: CreateInfoDto) {
     return this.infoService.createInfo(dto);

@@ -4,10 +4,11 @@ import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { RoleGuard } from './roles.guard';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtAuthGuard],
+  providers: [AuthService, JwtAuthGuard, RoleGuard],
   imports: [
     forwardRef(() => UsersModule),
     JwtModule.register({

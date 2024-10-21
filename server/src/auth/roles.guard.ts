@@ -1,8 +1,8 @@
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Observable } from "rxjs";
-import { ROLES_KEY } from "../roles/roles.decorator";
+import { ROLES_KEY } from "./roles.decorator";
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class RoleGuard implements CanActivate {
     try {
       const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
         context.getHandler(),
-        context.getClass()
+        context.getClass(),
       ]);
 
       if (!requiredRoles) {
@@ -29,11 +29,20 @@ export class RoleGuard implements CanActivate {
         throw new UnauthorizedException('Пользователь не авторизован');
       }
 
+      console.log(token);
       const user = this.jwtService.verify(token);
       req.user = user;
-      return requiredRoles.includes(user.role.value)
+      console.log(requiredRoles.includes(user.role.value))
+      const checkRole = requiredRoles.includes(user.role.value);
+
+      if (!checkRole) {
+        throw new ForbiddenException('Нет доступа');
+      }
+
+      return true;
 
     } catch(e) {
+      console.error(e);
       throw new ForbiddenException('Нет доступа');
     }
   }
