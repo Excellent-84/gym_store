@@ -1,10 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from './items.entity';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Roles } from 'src/auth/roles.decorator';
+import { RoleGuard } from 'src/auth/roles.guard';
 
 @ApiTags('Предметы')
 @Controller('items')
@@ -14,8 +16,8 @@ export class ItemsController {
 
   @ApiOperation({ summary: 'Добавить предмет' })
   @ApiResponse({ status: 201, type: Item })
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
   @UseInterceptors(FileInterceptor('image'))
   @Post('/')
   async create(@Body() dto: CreateItemDto, @UploadedFile() image) {
@@ -41,8 +43,8 @@ export class ItemsController {
 
   @ApiOperation({ summary: 'Обновить предмет' })
   @ApiResponse({ status: 200, type: Item })
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
   @UseInterceptors(FileInterceptor('image'))
   @Put(':id')
   async update(
@@ -53,8 +55,8 @@ export class ItemsController {
 
   @ApiOperation({ summary: 'Удалить предмет' })
   @HttpCode(204)
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
   @Delete(':id')
   async delete(@Param('id') id: number): Promise<void> {
     return this.itemService.deleteItem(id);

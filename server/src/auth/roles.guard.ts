@@ -29,10 +29,8 @@ export class RoleGuard implements CanActivate {
         throw new UnauthorizedException('Пользователь не авторизован');
       }
 
-      console.log(token);
       const user = this.jwtService.verify(token);
       req.user = user;
-      console.log(requiredRoles.includes(user.role.value))
       const checkRole = requiredRoles.includes(user.role.value);
 
       if (!checkRole) {
@@ -42,7 +40,6 @@ export class RoleGuard implements CanActivate {
       return true;
 
     } catch(e) {
-      console.error(e);
       throw new ForbiddenException('Нет доступа');
     }
   }

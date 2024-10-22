@@ -38,8 +38,8 @@ export class InfoController {
 
   @ApiOperation({ summary: 'Обновить информацию о предмете' })
   @ApiResponse({ status: 200, type: Info })
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
   @Put(':id')
   async update(@Param('id') id: number, @Body() dto: UpdateInfoDto): Promise<Info> {
     return this.infoService.updateInfo(id, dto);
@@ -47,8 +47,8 @@ export class InfoController {
 
   @ApiOperation({ summary: 'Удалить информацию о предмете' })
   @HttpCode(204)
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
+  @Roles('ADMIN')
+  @UseGuards(RoleGuard)
   @Delete(':id')
   async delete(@Param('id') id: number): Promise<void> {
     return this.infoService.deleteInfo(id);

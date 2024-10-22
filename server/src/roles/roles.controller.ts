@@ -12,12 +12,11 @@ export class RolesController {
 
   constructor(private readonly roleService: RolesService) {}
 
-  @ApiOperation({ summary: 'Добавление роли' })
-  @ApiResponse({ status: 201, type: Role })
-  @Post('/')
-  async create(@Body() roleDto: CreateRoleDto): Promise<Role> {
-    return this.roleService.createRole(roleDto);
-  }
+  // @ApiOperation({ summary: 'Добавление роли' })
+  // @Post('/')
+  // async create(@Body() roleDto: CreateRoleDto): Promise<Role> {
+  //   return this.roleService.createRole(roleDto);
+  // }@ApiResponse({ status: 201, type: Role })
 
   @ApiOperation({ summary: 'Получение роли по value' })
   @ApiResponse({ status: 200, type: Role })

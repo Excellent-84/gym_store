@@ -11,8 +11,6 @@ export class BasketItemController {
 
   @ApiOperation({ summary: 'Добавить тип предмета' })
   @ApiResponse({ status: 201, type: BasketItem })
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
   @Post('/')
   async create(@Body() dto: CreateBasketItemDto) {
     return this.basketItemService.createBasketItem(dto);
@@ -34,8 +32,6 @@ export class BasketItemController {
 
   @ApiOperation({ summary: 'Удалить тип предмета' })
   @HttpCode(204)
-  // @Roles('ADMIN')
-  // @UseGuards(RoleGuard)
   @Delete(':id')
   async delete(@Param('id') id: number): Promise<void> {
     return this.basketItemService.deleteBasketItem(id);
