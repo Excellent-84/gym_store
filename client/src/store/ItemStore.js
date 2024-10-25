@@ -3,30 +3,49 @@ import { makeAutoObservable } from 'mobx';
 export default class ItemStore {
 
   constructor() {
+
     this._types = [
       {id: 1, title: 'Мячи'},
-      {id: 1, title: 'Обручи'}
+      {id: 2, title: 'Обручи'}
     ]
+
     this._brands = [
       {id: 1, title: 'Pastorelli'},
-      {id: 1, title: 'Chacott'}
+      {id: 2, title: 'Chacott'}
     ]
+
+    this._items = [
+      {id: 1, title: 'Обруч 90 см', price: 1200, image: ''},
+      {id: 2, title: 'Обруч 80 см', price: 1250, image: ''},
+      {id: 3, title: 'Мяч 18 см', price: 5000, image: ''},
+      {id: 4, title: 'Мяч 18 см', price: 3500, image: ''},
+    ]
+
     makeAutoObservable(this)
   }
 
-  setAuth(bool) {
-    this._isAuth = bool
+  setTypes(types) {
+    this._types = types
   }
 
-  setUser(user) {
-    this._user = user
+  setBrand(brands) {
+    this._brands = brands
   }
 
-  get isAuth() {
-    return this._isAuth
+  setItems(items) {
+    this._items = items
   }
 
-  get user() {
-    return this._user
+
+  get types() {
+    return this._types
+  }
+
+  get brands() {
+    return this._brands
+  }
+
+  get items() {
+    return this._items
   }
 }
