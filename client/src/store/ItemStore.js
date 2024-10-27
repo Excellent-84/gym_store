@@ -6,12 +6,16 @@ export default class ItemStore {
 
     this._types = [
       {id: 1, title: 'Мячи'},
-      {id: 2, title: 'Обручи'}
+      {id: 2, title: 'Обручи'},
+      {id: 3, title: 'Булавы'},
+      {id: 4, title: 'Скакалки'}
     ]
 
     this._brands = [
       {id: 1, title: 'Pastorelli'},
-      {id: 2, title: 'Chacott'}
+      {id: 2, title: 'Chacott'},
+      {id: 3, title: 'Sasaki'},
+      {id: 2, title: 'Indigo'}
     ]
 
     this._items = [
@@ -21,6 +25,8 @@ export default class ItemStore {
       {id: 4, title: 'Мяч 18 см', price: 3500, image: ''},
     ]
 
+    this._selectedType = {}
+    this._selectedBrand = {}
     makeAutoObservable(this)
   }
 
@@ -36,7 +42,13 @@ export default class ItemStore {
     this._items = items
   }
 
+  setSelectedType(type) {
+    this._selectedType = type
+  }
 
+  setSelectedBrand(brand) {
+    this._selectedType = brand
+  }
   get types() {
     return this._types
   }
@@ -47,5 +59,13 @@ export default class ItemStore {
 
   get items() {
     return this._items
+  }
+
+  get selectedType() {
+    return this._selectedType
+  }
+
+  get selectedBrand() {
+    return this._selectedBrand
   }
 }
