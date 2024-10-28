@@ -15,7 +15,7 @@ export default class ItemStore {
       {id: 1, title: 'Pastorelli'},
       {id: 2, title: 'Chacott'},
       {id: 3, title: 'Sasaki'},
-      {id: 2, title: 'Indigo'}
+      {id: 4, title: 'Indigo'}
     ]
 
     this._items = [
@@ -34,7 +34,7 @@ export default class ItemStore {
     this._types = types
   }
 
-  setBrand(brands) {
+  setBrands(brands) {
     this._brands = brands
   }
 
@@ -47,7 +47,7 @@ export default class ItemStore {
   }
 
   setSelectedBrand(brand) {
-    this._selectedType = brand
+    this._selectedBrand = brand
   }
   get types() {
     return this._types
