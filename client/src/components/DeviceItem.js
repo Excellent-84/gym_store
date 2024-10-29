@@ -2,8 +2,12 @@ import React from "react";
 import Card from 'react-bootstrap/Card'
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import { useNavigate } from "react-router-dom"
 
 const DeviceItem = ({item})  => {
+
+  const history = useNavigate()
+  console.log(history)
 
   return (
     <Col md={3} className={"mt-3"}>
