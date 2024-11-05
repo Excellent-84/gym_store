@@ -4,13 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { observer } from 'mobx-react-lite';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { context } from "..";
-import { SHOP_ROUTE } from "../utils/consts";
+import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
 
 const NavBar = observer(() => {
 
   const {user} = useContext(context);
+  const navigate = useNavigate();
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
@@ -18,14 +19,27 @@ const NavBar = observer(() => {
         <Navbar.Brand style={{color: "pink"}} as={Link} to={SHOP_ROUTE}>GYM Store</Navbar.Brand>
         {user.isAuth ?
           <Nav className="al-auto" style={{color: "pink"}}>
-            <Button variant={"outline-lite"}>Админ панель</Button>
-            <Nav.Link href="#features" className="al-2">Выйти</Nav.Link>
+            <Button
+              variant={"outline-lite"}
+              onClick={() => navigate.push(ADMIN_ROUTE)}
+            >
+              Админ панель
+            </Button>
+            <Button
+              variant={"outline-lite"}
+              onClick={() => navigate.push(LOGIN_ROUTE)}
+            >
+              Выйти
+            </Button>
           </Nav>
           :
           <Nav className="al-auto" style={{color: "pink"}}>
-            <Button variant={"outline-lite"}>Админ панель</Button>
-            <Nav.Link variant={"outline-lite"}>Предметы</Nav.Link>
-            <Nav.Link href="#features" onClick={() => user.setAuth(true)}>Авторизация</Nav.Link>
+            <Button
+              variant={"outline-lite"}
+              onClick={() => user.setAuth(true)}
+            >
+              Авторизация
+            </Button>
           </Nav>
         }
       </Container>
