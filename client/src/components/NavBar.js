@@ -21,13 +21,13 @@ const NavBar = observer(() => {
           <Nav className="al-auto" style={{color: "pink"}}>
             <Button
               variant={"outline-lite"}
-              onClick={() => navigate.push(ADMIN_ROUTE)}
+              onClick={() => navigate(ADMIN_ROUTE)}
             >
               Админ панель
             </Button>
             <Button
               variant={"outline-lite"}
-              onClick={() => navigate.push(LOGIN_ROUTE)}
+              onClick={() => navigate(LOGIN_ROUTE)}
             >
               Выйти
             </Button>
