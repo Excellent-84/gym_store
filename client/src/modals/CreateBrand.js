@@ -7,7 +7,6 @@ const CreateBrand = ({show, onHide}) => {
     <Modal
       show={show}
       onHide={onHide}
-      size="lg"
       centered
     >
       <Modal.Header closeButton>
