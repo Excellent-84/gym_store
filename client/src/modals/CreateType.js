@@ -20,7 +20,6 @@ const CreateType = ({show, onHide}) => {
               placeholder={"Введите название типа"}
             />
         </Form>
-
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
