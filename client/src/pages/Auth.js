@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import { NavLink, useLocation } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
+import { login, registration } from "../http/userAPI";
 
 const Auth = () => {
 
   const location = useLocation();
   const isLogin = location.pathname === LOGIN_ROUTE;
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const click = async () =>  {
+    if (isLogin) {
+      const response = await login();
+    } else {
+      const response = await registration(email, password);
+      console.log(response);
+    }
+  }
 
   return (
     <Container
@@ -22,12 +34,19 @@ const Auth = () => {
           <Form.Control
             className="mt-3"
             placeholder="Введите email..."
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+
           >
           </Form.Control>
 
           <Form.Control
             className="mt-3"
             placeholder="Введите пароль..."
+
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            type="password"
           >
           </Form.Control>
 
@@ -42,6 +61,7 @@ const Auth = () => {
 
             <Button
               variant={"outline-success"}
+              onClick={click}
             >
               {isLogin ? "Войти" : "Регистрация"}
             </Button>
