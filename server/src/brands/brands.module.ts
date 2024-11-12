@@ -6,7 +6,6 @@ import { FilesModule } from 'src/files/files.module';
 import { Item } from 'src/items/items.entity';
 import { Brand } from './brands.entity';
 import { Type } from 'src/types/types.entity';
-import { ItemsModule } from 'src/items/items.module';
 
 @Module({
   providers: [BrandsService],
@@ -15,6 +14,5 @@ import { ItemsModule } from 'src/items/items.module';
     TypeOrmModule.forFeature([Item, Brand, Type]),
     FilesModule
   ],
-  // exports: [BrandsService]
 })
 export class BrandsModule {}

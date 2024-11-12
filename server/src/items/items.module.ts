@@ -11,16 +11,15 @@ import { TypesService } from 'src/types/types.service';
 import { BrandsService } from 'src/brands/brands.service';
 import { BasketItem } from 'src/basket_item/basket_item.entity';
 import { Info } from 'src/info/info.entity';
-import { InfoService } from 'src/info/info.service';
-import { BasketItemModule } from 'src/basket_item/basket_item.module';
-import { TypesModule } from 'src/types/types.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   providers: [ItemsService, TypesService, BrandsService],
   controllers: [ItemsController],
   imports: [
     TypeOrmModule.forFeature([User, Item, Brand, Type, BasketItem, Info]),
-    FilesModule
+    FilesModule,
+    AuthModule
   ],
   exports: [ItemsService]
 })

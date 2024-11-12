@@ -12,7 +12,6 @@ import { FilesModule } from 'src/files/files.module';
 import { Brand } from 'src/brands/brands.entity';
 import { Type } from 'src/types/types.entity';
 import { RolesModule } from 'src/roles/roles.module';
-import { JwtService } from '@nestjs/jwt';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({

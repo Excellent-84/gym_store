@@ -10,9 +10,6 @@ import { Item } from 'src/items/items.entity';
 import { Info } from 'src/info/info.entity';
 import { Basket } from 'src/baskets/baskets.entity';
 import { BasketsService } from 'src/baskets/baskets.service';
-import { BasketsModule } from 'src/baskets/baskets.module';
-import { BasketItem } from 'src/basket_item/basket_item.entity';
-import { BasketItemService } from 'src/basket_item/basket_item.service';
 
 @Module({
   controllers: [UsersController],
@@ -20,7 +17,6 @@ import { BasketItemService } from 'src/basket_item/basket_item.service';
   imports: [
     TypeOrmModule.forFeature([User, Role, Item, Info, Basket]),
     forwardRef(() => AuthModule),
-    // forwardRef(() => BasketsModule),
     RolesModule
   ],
   exports: [

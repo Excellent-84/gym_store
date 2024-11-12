@@ -6,7 +6,6 @@ import { Item } from 'src/items/items.entity';
 import { Brand } from 'src/brands/brands.entity';
 import { Type } from './types.entity';
 import { FilesModule } from 'src/files/files.module';
-import { ItemsModule } from 'src/items/items.module';
 
 @Module({
   providers: [TypesService],
