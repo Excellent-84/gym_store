@@ -18,7 +18,7 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  async registration(userDto: CreateUserDto): Promise<User> {
+  async registration(userDto: CreateUserDto): Promise<TokenResponse> {
     const condidate = await this.userService.getUserByEmail(userDto.email);
 
     if (condidate) {
@@ -26,7 +26,8 @@ export class AuthService {
     }
 
     const hashPassword = await bcrypt.hash(userDto.password, 10);
-    return await this.userService.createUser({ ...userDto, password: hashPassword });
+    const user = await this.userService.createUser({ ...userDto, password: hashPassword });
+    return this.generateToken(user);
   }
 
   private async generateToken(user: User) {

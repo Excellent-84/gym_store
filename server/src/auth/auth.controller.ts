@@ -12,9 +12,9 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({ summary: 'Регистрация пользователя' })
-  @ApiResponse({ status: 201, type: User })
+  @ApiResponse({ status: 201, type: TokenResponse })
   @Post('/registration')
-  registration(@Body() userDto: CreateUserDto): Promise<User> {
+  registration(@Body() userDto: CreateUserDto): Promise<TokenResponse> {
     return this.authService.registration(userDto);
   }
 
