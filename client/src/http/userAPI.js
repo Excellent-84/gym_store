@@ -2,8 +2,14 @@ import { $authHost, $host } from ".";
 import { jwtDecode } from "jwt-decode";
 
 export const registration = async (email, password) => {
-  const {data} = await $host.post('/auth/registration', {email, password, role: 'ADMIN'})
-  return jwtDecode(data.token)
+
+  try {
+    const { data } = await $host.post('/auth/registration', { email, password, role: 'ADMIN' });
+    return jwtDecode(data.token);
+  } catch (error) {
+    console.error("Error during registration:", error);
+    throw error;
+  }
 }
 
 export const login = async (email, password) => {
