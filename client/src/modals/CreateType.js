@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
-
 const CreateType = ({show, onHide}) => {
   return (
     <Modal

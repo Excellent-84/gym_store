@@ -7,6 +7,7 @@ import ItemStore from './store/ItemStore';
 export const context = createContext(null);
 
 const root = createRoot(document.getElementById("root"));
+
 root.render(
   <context.Provider value={{
     user: new UserStore(),
