@@ -6,8 +6,6 @@ import { Item } from 'src/items/items.entity';
 import { BasketItem } from './basket_item.entity';
 import { ItemsService } from 'src/items/items.service';
 import { Basket } from 'src/baskets/baskets.entity';
-import { ItemsModule } from 'src/items/items.module';
-import { TypesModule } from 'src/types/types.module';
 import { TypesService } from 'src/types/types.service';
 import { BrandsService } from 'src/brands/brands.service';
 import { FilesModule } from 'src/files/files.module';
