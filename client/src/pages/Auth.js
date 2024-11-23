@@ -3,8 +3,8 @@ import { Container, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
-import { NavLink, useLocation } from "react-router-dom";
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
+import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../utils/consts";
 import { login, registration } from "../http/userAPI";
 import { observer } from 'mobx-react-lite';
 import { context } from "..";
@@ -13,20 +13,26 @@ const Auth = observer(() => {
 
   const {user} = useContext(context);
   const location = useLocation();
+  const history = useHistory()
   const isLogin = location.pathname === LOGIN_ROUTE;
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const click = async () =>  {
-    let data;
-    if (isLogin) {
-      data = await login(email, password);
-    } else {
-      data = await registration(email, password);
-      console.log(data);
+    try {
+      let data;
+      if (isLogin) {
+        data = await login(email, password);
+      } else {
+        data = await registration(email, password);
+       console.log(data);
+      }
+      user.setUser(user)
+      user.setIsAuth(true)
+      history.push(SHOP_ROUTE)
+    } catch (e) {
+      alert(e.response.data.message)
     }
-    user.setUser(user)
-    user.setIsAuth(true)
   }
 
   return (
