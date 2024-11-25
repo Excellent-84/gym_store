@@ -3,7 +3,7 @@ import { Container, Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../utils/consts";
 import { login, registration } from "../http/userAPI";
 import { observer } from 'mobx-react-lite';
@@ -13,10 +13,10 @@ const Auth = observer(() => {
 
   const {user} = useContext(context);
   const location = useLocation();
-  const history = useHistory()
+  const navigate = useNavigate();
   const isLogin = location.pathname === LOGIN_ROUTE;
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const click = async () =>  {
     try {
@@ -27,9 +27,9 @@ const Auth = observer(() => {
         data = await registration(email, password);
        console.log(data);
       }
-      user.setUser(user)
+      user.setUser(data)
       user.setIsAuth(true)
-      history.push(SHOP_ROUTE)
+      navigate(SHOP_ROUTE)
     } catch (e) {
       alert(e.response.data.message)
     }

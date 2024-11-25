@@ -17,7 +17,7 @@ const NavBar = observer(() => {
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
         <Navbar.Brand style={{color: "pink"}} as={Link} to={SHOP_ROUTE}>GYM Store</Navbar.Brand>
-        {user.isAuth ?
+        {user.setIsAuth ?
           <Nav className="al-auto" style={{color: "pink"}}>
             <Button
               variant={"outline-lite"}
